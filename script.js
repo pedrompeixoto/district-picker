@@ -1,4 +1,12 @@
-const map = L.map("map").setView([39.5, -8], 6);
+const map = L.map("map", {
+    dragging: false,
+    zoomControl: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    touchZoom: false
+});
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
@@ -19,6 +27,9 @@ fetch("./georef-portugal-distrito.geojson")
                 fillOpacity: 0.2,
             }
         }).addTo(map);
+
+        // Automatically zoom and fit all districts (mainland + islands)
+        map.fitBounds(geoLayer.getBounds());
     });
 
 function randomHighlightAnimation() {
